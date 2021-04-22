@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="bigAmountTest">
+    <test name="allBigAmountTests">
+        <groups>
+            <run>
+                <include name="bigAmount"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="ru.training.at.hw1.utils.ProgressiveTaxCalculationUnitTest"/>
+        </classes>
+    </test>
+</suite>
