@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="flatTaxTest">
+    <test name="allFlatTaxTests">
+        <groups>
+            <run>
+                <include name="flatTax"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="ru.training.at.hw1.utils"/>
+        </packages>
+    </test>
+</suite>

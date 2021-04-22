@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.training.at</groupId>
+    <artifactId>epam-test-auto-spring-2021</artifactId>
+    <version>2021.04.22-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--  pay attention, dependencies versions are usually set as properties  -->
+        <checkstyle.version>8.41.1</checkstyle.version>
+        <testng.version>7.4.0</testng.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+
+        <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
+        <testng.suite.file/>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+            <!--  default scope is compile  -->
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+            <!--  this way we can exclude transitive dependencies,
+              testng has junit in dependencies, but we don't want it in project  -->
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <!--  pay attention, we put only groupId and artifactId, but not version  -->
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.19.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>
+                        <!--  pay attention to use exact url for checkstyle plugin ruleset  -->
+                        https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
+                    </configLocation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <violationSeverity>warning</violationSeverity>
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <!--  encoding tag is omitted because it's default value is
+                    ${project.build.source.encoding} which is already defined in properties section  -->
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <!--  source and target configs can be set in properties section (in same way as encoding) using
+                    ${maven.compiler.source} and ${maven.compiler.target} properties correspondingly -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>bigAmountInProgressiveTest</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/bigAmountTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>flatTaxTests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/flatTaxTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>progressiveTaxTests</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/progressiveTaxTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>allTests</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/allTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+    </profiles>
+</project>
