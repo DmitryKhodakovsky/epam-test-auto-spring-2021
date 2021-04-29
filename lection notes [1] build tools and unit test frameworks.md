@@ -26,7 +26,7 @@ mvn archetype:generate -DinteractiveMode=false -DarchetypeGroupId=org.apache.mav
 
 # Checkstyle
 We will use the following config: https://raw.githubusercontent.com/DmitryKhodakovsky/epam-test-auto-spring-2021/master/codestyle_checks.xml
-Settings for pom.xml can be taken from this repo [pom.xml](epam-test-auto-spring-2021/pom.xml)
+Settings for pom.xml can be taken from this repo [pom.xml](https://github.com/DmitryKhodakovsky/epam-test-auto-spring-2021/blob/master/pom.xml)
 
 In IntelliJ IDEA I use the following plugin: https://plugins.jetbrains.com/plugin/1065-checkstyle-idea
 
