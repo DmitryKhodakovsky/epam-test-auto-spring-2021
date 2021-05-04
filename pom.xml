@@ -17,9 +17,13 @@
         <testng.version>7.4.0</testng.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <selenium-java.version>3.141.59</selenium-java.version>
+        <allure.version>2.13.2</allure.version>
+        <aspectj.version>1.9.5</aspectj.version>
+        <slf4j-simple.version>1.7.30</slf4j-simple.version>
+        <lombok.version>1.18.10</lombok.version>
 
         <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
-        <testng.suite.file/>
+        <commons-io.version>2.7</commons-io.version>
     </properties>
 
     <dependencies>
@@ -28,6 +32,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
             <!--  default scope is compile  -->
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -56,10 +65,20 @@
             <version>${selenium-java.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+        </dependency>
+        <!--  Allure adapter-->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
         </dependency>
     </dependencies>
 
@@ -116,7 +135,17 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${testng.suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -149,5 +178,25 @@
                 <testng.suite.file>${testng.configs.path}/allTests.xml</testng.suite.file>
             </properties>
         </profile>
+        <profile>
+            <id>allureDemo</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/allureDemo.xml</testng.suite.file>
+            </properties>
+        </profile>
     </profiles>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.10.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
