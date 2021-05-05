@@ -66,6 +66,11 @@
             <version>${selenium-java.version}</version>
         </dependency>
         <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
@@ -164,6 +169,9 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <systemProperties>
+                        <browser.name>${browser.name.property}</browser.name>
+                    </systemProperties>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -214,6 +222,18 @@
             <id>CucumberTests</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/CucumberTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>GridTests</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/GridTests.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>chrome</id>
+            <properties>
+                <browser.name.property>chrome</browser.name.property>
             </properties>
         </profile>
     </profiles>
