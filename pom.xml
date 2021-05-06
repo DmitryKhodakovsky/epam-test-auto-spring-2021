@@ -24,6 +24,7 @@
 
         <testng.configs.path>${project.build.testOutputDirectory}/testngconfigs</testng.configs.path>
         <commons-io.version>2.7</commons-io.version>
+        <cucumber.version>6.9.1</cucumber.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,25 @@
             <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -182,6 +202,12 @@
             <id>allureDemo</id>
             <properties>
                 <testng.suite.file>${testng.configs.path}/allureDemo.xml</testng.suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>CucumberTests</id>
+            <properties>
+                <testng.suite.file>${testng.configs.path}/CucumberTests.xml</testng.suite.file>
             </properties>
         </profile>
     </profiles>
