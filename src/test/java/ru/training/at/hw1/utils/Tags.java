@@ -1,9 +1,12 @@
 package ru.training.at.hw1.utils;
 
-public interface Tags {
-    String BIG_AMOUNT = "bigAmount";
-    String SMALL_AMOUNT = "smallAmount";
-    String FLAT_TAX = "flatTax";
-    String PROGRESSIVE_TAX = "progressiveTax";
-    String SOFT_ASSERTS = "softAsserts";
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class Tags {
+    public static final String BIG_AMOUNT = "bigAmount";
+    public static final String SMALL_AMOUNT = "smallAmount";
+    public static final String FLAT_TAX = "flatTax";
+    public static final String PROGRESSIVE_TAX = "progressiveTax";
+    public static final String SOFT_ASSERTS = "softAsserts";
 }
